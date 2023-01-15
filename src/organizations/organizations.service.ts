@@ -40,7 +40,11 @@ export class OrganizationsService {
     return updateData;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} organization`;
+  async remove(id: number) {
+    const result = await this.prisma.organization.delete({ where: { id } });
+    const deleteResult = JSON.stringify(result, (_key, value) =>
+      typeof value === 'bigint' ? value.toString() : value,
+    );
+    return deleteResult;
   }
 }
