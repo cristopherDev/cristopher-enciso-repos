@@ -11,25 +11,25 @@ datasource db {
 }
 
 model organization {
-  id Int @id @default(autoincrement())
+  id BigInt @id @default(autoincrement())
   name String @db.VarChar(50)
   status Int
   tribes tribe[]
 }
 
 model tribe {
-  id Int @id @default(autoincrement())
+  id BigInt @id @default(autoincrement())
   organization organization @relation(fields: [id_organization], references: [id])
-  id_organization Int
+  id_organization BigInt
   name String @db.VarChar(50)
   status Int
   repositories repository[]
 }
 
 model repository {
-  id Int @id @default(autoincrement())
+  id BigInt @id @default(autoincrement())
   tribe tribe @relation(fields: [id_tribe], references: [id])
-  id_tribe Int
+  id_tribe BigInt
   name String @db.VarChar(50)
   state String @db.VarChar(1)
   create_time DateTime @default(now())
@@ -39,7 +39,7 @@ model repository {
 
 model metrics {
   repository repository @relation(fields: [id_repository], references: [id])
-  id_repository Int @id @default(autoincrement())
+  id_repository BigInt @id @default(autoincrement())
   coverage Float @db.DoublePrecision()
   bugs Int
   vulnerabilities Int
