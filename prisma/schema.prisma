@@ -14,4 +14,13 @@ model organization {
   id Int @id @default(autoincrement())
   name String @db.VarChar(50)
   status Int
+  tribes tribe[]
+}
+
+model tribe {
+  id Int @id @default(autoincrement())
+  organization organization @relation(fields: [id_organization], references: [id])
+  id_organization Int
+  name String @db.VarChar(50)
+  status Int
 }
