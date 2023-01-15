@@ -7,8 +7,14 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class OrganizationsService {
   constructor(private prisma: PrismaService) {}
 
-  create(createOrganizationDto: CreateOrganizationDto) {
-    return 'This action adds a new organization';
+  async create(createOrganizationDto: CreateOrganizationDto) {
+    const data = await this.prisma.organization.create({
+      data: createOrganizationDto,
+    });
+    const newOrganizationData = JSON.stringify(data, (_key, value) =>
+      typeof value === 'bigint' ? value.toString() : value,
+    );
+    return newOrganizationData;
   }
 
   async findAll() {
