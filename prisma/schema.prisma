@@ -23,4 +23,15 @@ model tribe {
   id_organization Int
   name String @db.VarChar(50)
   status Int
+  repositories repository[]
+}
+
+model repository {
+  id Int @id @default(autoincrement())
+  tribe tribe @relation(fields: [id_tribe], references: [id])
+  id_tribe Int
+  name String @db.VarChar(50)
+  state String @db.VarChar(1)
+  create_time DateTime @default(now())
+  status String @db.VarChar(1)
 }
