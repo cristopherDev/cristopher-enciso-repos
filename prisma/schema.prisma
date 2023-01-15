@@ -12,7 +12,7 @@ datasource db {
 
 model organization {
   id BigInt @id @default(sequence())
-  name String @db.Char(50)
+  name String @db.String(50)
   status Int
   tribes tribe[]
 }
@@ -21,7 +21,7 @@ model tribe {
   id BigInt @id @default(sequence())
   organization organization @relation(fields: [id_organization], references: [id])
   id_organization BigInt
-  name String @db.Char(50)
+  name String @db.String(50)
   status Int
   repositories repository[]
 }
@@ -30,10 +30,10 @@ model repository {
   id BigInt @id @default(sequence())
   tribe tribe @relation(fields: [id_tribe], references: [id])
   id_tribe BigInt
-  name String @db.Char(50)
-  state String @db.Char(1)
+  name String @db.String(50)
+  state String @db.String(1)
   create_time DateTime @default(now())
-  status String @db.Char(1)
+  status String @db.String(1)
   metrics metrics?
 }
 
