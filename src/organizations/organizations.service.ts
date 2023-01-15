@@ -6,13 +6,13 @@ import { PrismaService } from 'src/prisma/prisma.service'
 @Injectable()
 export class OrganizationsService {
   constructor(private prisma: PrismaService) {}
-  
+
   create(createOrganizationDto: CreateOrganizationDto) {
     return 'This action adds a new organization';
   }
 
   findAll() {
-    return `This action returns all organizations`;
+    return this.prisma.organization.findMany();
   }
 
   findOne(id: number) {
