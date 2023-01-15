@@ -34,4 +34,15 @@ model repository {
   state String @db.VarChar(1)
   create_time DateTime @default(now())
   status String @db.VarChar(1)
+  metrics metrics?
+}
+
+model metrics {
+  repository repository @relation(fields: [id_repository], references: [id])
+  id_repository Int @id @default(autoincrement())
+  coverage Float @db.DoublePrecision()
+  bugs Int
+  vulnerabilities Int
+  hotspot Int
+  code_smells Int
 }
