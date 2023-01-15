@@ -6,41 +6,41 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "cockroachdb"
   url      = env("DATABASE_URL")
 }
 
 model organization {
-  id BigInt @id @default(autoincrement())
-  name String @db.VarChar(50)
+  id BigInt @id @default(sequence())
+  name String @db.Char(50)
   status Int
   tribes tribe[]
 }
 
 model tribe {
-  id BigInt @id @default(autoincrement())
+  id BigInt @id @default(sequence())
   organization organization @relation(fields: [id_organization], references: [id])
   id_organization BigInt
-  name String @db.VarChar(50)
+  name String @db.Char(50)
   status Int
   repositories repository[]
 }
 
 model repository {
-  id BigInt @id @default(autoincrement())
+  id BigInt @id @default(sequence())
   tribe tribe @relation(fields: [id_tribe], references: [id])
   id_tribe BigInt
-  name String @db.VarChar(50)
-  state String @db.VarChar(1)
+  name String @db.Char(50)
+  state String @db.Char(1)
   create_time DateTime @default(now())
-  status String @db.VarChar(1)
+  status String @db.Char(1)
   metrics metrics?
 }
 
 model metrics {
   repository repository @relation(fields: [id_repository], references: [id])
-  id_repository BigInt @id @default(autoincrement())
-  coverage Float @db.DoublePrecision()
+  id_repository BigInt @id @default(sequence())
+  coverage Float 
   bugs Int
   vulnerabilities Int
   hotspot Int
