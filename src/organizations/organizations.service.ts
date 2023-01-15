@@ -29,8 +29,15 @@ export class OrganizationsService {
     return `This action returns a #${id} organization`;
   }
 
-  update(id: number, updateOrganizationDto: UpdateOrganizationDto) {
-    return `This action updates a #${id} organization`;
+  async update(id: number, updateOrganizationDto: UpdateOrganizationDto) {
+    const data = await this.prisma.organization.update({
+      where: { id },
+      data: updateOrganizationDto,
+    });
+    const updateData = JSON.stringify(data, (_key, value) =>
+      typeof value === 'bigint' ? value.toString() : value,
+    );
+    return updateData;
   }
 
   remove(id: number) {
