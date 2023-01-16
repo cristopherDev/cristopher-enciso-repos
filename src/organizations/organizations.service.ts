@@ -23,7 +23,7 @@ export class OrganizationsService {
   async findAll() {
     const data = await this.prisma.organization.findMany();
     const organizationsData = JSON.stringify(data, (_key, value) =>
-      typeof value === 'bigint' ? value.toString() : value,
+      typeof value === 'bigint' ? Number(value.toString()) : value,
     );
     return organizationsData;
   }
