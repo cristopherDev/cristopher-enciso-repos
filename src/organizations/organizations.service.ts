@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { formatObjectOrganization } from './helpers/format-object.helper';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class OrganizationsService {
     const newOrganizationData = JSON.stringify(data, (_key, value) =>
       typeof value === 'bigint' ? value.toString() : value,
     );
-    return newOrganizationData;
+    return JSON.parse(newOrganizationData);
   }
 
   async findAll() {
@@ -37,7 +37,7 @@ export class OrganizationsService {
     const organizationsData = JSON.stringify(data, (_key, value) =>
       typeof value === 'bigint' ? Number(value.toString()) : value,
     );
-    return organizationsData;
+    return JSON.parse(organizationsData);
   }
 
   findOne(id: number) {
@@ -58,7 +58,7 @@ export class OrganizationsService {
     const updateData = JSON.stringify(data, (_key, value) =>
       typeof value === 'bigint' ? Number(value.toString()) : value,
     );
-    return updateData;
+    return JSON.parse(updateData);
   }
 
   async remove(id: number) {
