@@ -22,6 +22,30 @@ describe('AppController (e2e)', () => {
       .expect('Hello World!');
   });
 
+  it('/repositories (GET)', () => {
+    const repositories = {
+      repositories: [
+        {
+          id: 1,
+          state: 604,
+        },
+        {
+          id: 2,
+          state: 605,
+        },
+        {
+          id: 3,
+          state: 606,
+        },
+      ],
+    };
+
+    return request(app.getHttpServer())
+      .get('/repositories')
+      .expect(200)
+      .expect(repositories);
+  });
+
   it('/tribes/:id/repositories (GET)', () => {
     const id: number = 1;
     const errorObjectResponse = {
@@ -55,7 +79,7 @@ describe('AppController (e2e)', () => {
       .get(`/tribes/${id}/repositories`)
       .expect(200)
       .expect((_err, res) => {
-        expect(typeof res.body.repositories).toBe('array')
+        expect(typeof res.body.repositories).toBe('array');
       });
   });
 
@@ -63,6 +87,6 @@ describe('AppController (e2e)', () => {
     const id: number = 2;
     return request(app.getHttpServer())
       .get(`/tribes/${id}/repositories`)
-      .expect(200)
+      .expect(200);
   });
 });
