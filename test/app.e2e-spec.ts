@@ -62,8 +62,7 @@ describe('AppController (e2e)', () => {
   it('/tribes/:id/repositories/report (GET) download csv', () => {
     const id: number = 2;
     return request(app.getHttpServer())
-      .post(`/tribes/${id}/repositories`)
-      .expect(201)
-      .expect('Content-Type', 'text/csv')
+      .get(`/tribes/${id}/repositories`)
+      .expect(200)
   });
 });

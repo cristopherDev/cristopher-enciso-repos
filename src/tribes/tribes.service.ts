@@ -7,8 +7,8 @@ export class TribesService {
   constructor(private prisma: PrismaService) {}
 
   async findRepositories(id: number) {
-    const stateType: string = 'A';
-    const setCoverage: number = 9;
+    const stateType: string = 'E';
+    const setCoverage: number = 75;
 
     const statesTypes = {
       E: 'Habilitado',
