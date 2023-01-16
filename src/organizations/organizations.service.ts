@@ -2,14 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { formatObjectOrganization } from './helpers/format-object.helper';
 
 @Injectable()
 export class OrganizationsService {
   constructor(private prisma: PrismaService) {}
 
   async create(createOrganizationDto: CreateOrganizationDto) {
+    const organizationData = formatObjectOrganization(createOrganizationDto);
+
     const data = await this.prisma.organization.create({
-      data: createOrganizationDto,
+      data: organizationData,
     });
     const newOrganizationData = JSON.stringify(data, (_key, value) =>
       typeof value === 'bigint' ? value.toString() : value,
