@@ -22,6 +22,16 @@ export class TribesService {
   async findRepositories(id: number) {
     const startDate = new Date(new Date().getFullYear(), 0, 1).toISOString();
     const endDate = new Date(new Date().getFullYear(), 11, 31).toISOString();
+
+    const checkRepository = await this.prisma.tribe.findFirst({
+      where: { id },
+      select: {
+        name: true,
+      },
+    });
+
+    if (!checkRepository) return null;
+
     const repositories = await this.prisma.tribe.findMany({
       where: {
         id,

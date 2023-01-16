@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  NotFoundException,
+} from '@nestjs/common';
 import { TribesService } from './tribes.service';
 import { CreateTribeDto } from './dto/create-tribe.dto';
 import { UpdateTribeDto } from './dto/update-tribe.dto';
@@ -18,8 +27,13 @@ export class TribesController {
   }
 
   @Get(':id/repositories')
-  findOne(@Param('id') id: string) {
-    return this.tribesService.findRepositories(+id);
+  async findRepositories(@Param('id') id: string) {
+    const notFoundText = 'La Tribu no se encuentra registrada';
+    const tribe = await this.tribesService.findRepositories(+id);
+
+    if (!tribe) throw new NotFoundException(notFoundText);
+
+    return tribe;
   }
 
   @Patch(':id')
