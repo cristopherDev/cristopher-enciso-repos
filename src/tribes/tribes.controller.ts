@@ -28,10 +28,12 @@ export class TribesController {
 
   @Get(':id/repositories')
   async findRepositories(@Param('id') id: string) {
-    const notFoundText = 'La Tribu no se encuentra registrada';
+    const notFoundText = `La Tribu ${id} no se encuentra registrada`;
+    const notCoverageText = `La Tribu ${id} no tiene repositorios que cumplan con la cobertura necesaria`;
     const tribe = await this.tribesService.findRepositories(+id);
 
     if (!tribe) throw new NotFoundException(notFoundText);
+    if (!JSON.parse(tribe).length) throw new NotFoundException(notCoverageText);
 
     return tribe;
   }
