@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { parse, stringify } from 'flatted';
 
 @Injectable()
 export class TribesService {
   constructor(private prisma: PrismaService) {}
 
   async findRepositories(id: number) {
-    const stateType: string = 'E';
-    const setCoverage: number = 75;
+    const stateType: string = 'A';
+    const setCoverage: number = 9;
 
     const statesTypes = {
       E: 'Habilitado',
@@ -47,11 +48,11 @@ export class TribesService {
       and date_part('year', repository.create_time) = date_part('year', CURRENT_DATE)
     `;
 
-    const convertResult: string = JSON.stringify(result, (_key, value) =>
+    const convertResult: string = stringify(result, (_key, value) =>
       typeof value === 'bigint' ? Number(value.toString()) : value,
     );
 
-    const parseResult = JSON.parse(convertResult);
+    const parseResult = parse(convertResult);
 
     if (!parseResult.length) return {};
 
@@ -60,6 +61,6 @@ export class TribesService {
       repository.state = statesTypes[repository.state];
     });
 
-    return { repositories: parseResult };
+    return parseResult;
   }
 }
