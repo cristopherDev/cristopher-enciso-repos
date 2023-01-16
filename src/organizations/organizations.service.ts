@@ -29,7 +29,13 @@ export class OrganizationsService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} organization`;
+    return this.prisma.organization.findFirst({
+      where: { id },
+      select: {
+        name: true,
+        status: true,
+      },
+    });
   }
 
   async update(id: number, updateOrganizationDto: UpdateOrganizationDto) {
@@ -38,7 +44,7 @@ export class OrganizationsService {
       data: updateOrganizationDto,
     });
     const updateData = JSON.stringify(data, (_key, value) =>
-      typeof value === 'bigint' ? value.toString() : value,
+      typeof value === 'bigint' ? Number(value.toString()) : value,
     );
     return updateData;
   }
