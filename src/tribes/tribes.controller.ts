@@ -17,9 +17,9 @@ export class TribesController {
     return this.tribesService.findAll();
   }
 
-  @Get(':id')
+  @Get(':id/repositories')
   findOne(@Param('id') id: string) {
-    return this.tribesService.findOne(+id);
+    return this.tribesService.findRepositories(+id);
   }
 
   @Patch(':id')
