@@ -6,8 +6,14 @@ export class TribesService {
   constructor(private prisma: PrismaService) {}
 
   async findRepositories(id: number) {
-    const stateType = 'E';
-    const setCoverage = 75;
+    const stateType: string = 'E';
+    const setCoverage: number = 75;
+
+    const statesTypes = {
+      E: 'Habilitado',
+      D: 'Desactivado',
+      A: 'Archivado',
+    };
 
     const checkRepository = await this.prisma.tribe.findFirst({
       where: { id },
@@ -37,20 +43,23 @@ export class TribesService {
       left join metrics on metrics.id_repository = repository.id
       where tribe.id = ${id}
       and repository.state = ${stateType}
-      and metrics.coverage > ${setCoverage}
+      and metrics.coverage >= ${setCoverage}
       and date_part('year', repository.create_time) = date_part('year', CURRENT_DATE)
     `;
 
-    const convertResult = JSON.stringify(result, (_key, value) =>
+    const convertResult: string = JSON.stringify(result, (_key, value) =>
       typeof value === 'bigint' ? Number(value.toString()) : value,
     );
 
     const parseResult = JSON.parse(convertResult);
 
-    if (!parseResult.length) return {}
+    if (!parseResult.length) return {};
 
-    parseResult.coverage = `${parseResult.coverage}%`;
+    parseResult.forEach((repository) => {
+      repository.coverage = `${repository.coverage}%`;
+      repository.state = statesTypes[repository.state];
+    });
 
-    return { "repositories": parseResult };
+    return { repositories: parseResult };
   }
 }
