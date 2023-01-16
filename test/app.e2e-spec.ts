@@ -21,4 +21,41 @@ describe('AppController (e2e)', () => {
       .expect(200)
       .expect('Hello World!');
   });
+
+  it('/tribes/:id/repositories (GET)', () => {
+    const id: number = 1;
+    const errorObjectResponse = {
+      statusCode: 404,
+      message: 'La Tribu 1 no se encuentra registrada',
+      error: 'Not Found',
+    };
+    return request(app.getHttpServer())
+      .get(`/tribes/${id}/repositories`)
+      .expect(404)
+      .expect(errorObjectResponse);
+  });
+
+  it('/tribes/:id/repositories (GET)', () => {
+    const id: number = 2;
+    const errorObjectResponse = {
+      statusCode: 404,
+      message:
+        'La Tribu 2 no tiene repositorios que cumplan con la cobertura necesaria',
+      error: 'Not Found',
+    };
+    return request(app.getHttpServer())
+      .get(`/tribes/${id}/repositories`)
+      .expect(404)
+      .expect(errorObjectResponse);
+  });
+
+  it('/tribes/:id/repositories (GET)', () => {
+    const id: number = 3;
+    return request(app.getHttpServer())
+      .get(`/tribes/${id}/repositories`)
+      .expect(200)
+      .expect((err, res) => {
+        expect(typeof res.body.repositories).toBe('array')
+      });
+  });
 });

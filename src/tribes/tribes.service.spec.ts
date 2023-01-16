@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { PrismaService } from '../prisma/prisma.service';
 import { TribesService } from './tribes.service';
 
 describe('TribesService', () => {
@@ -6,13 +7,18 @@ describe('TribesService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [TribesService],
+      providers: [TribesService, PrismaService],
     }).compile();
 
     service = module.get<TribesService>(TribesService);
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+  describe('findRepositories()', () => {
+    it('Obtener métricas de repositorios por tribu', async () => {
+      const id = 1;
+      const repositories = await service.findRepositories(id);
+      expect(repositories)
+      expect(typeof repositories).toBe('object');
+    });
   });
 });
