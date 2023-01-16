@@ -1,23 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateTribeDto } from './dto/create-tribe.dto';
-import { UpdateTribeDto } from './dto/update-tribe.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class TribesService {
   constructor(private prisma: PrismaService) {}
-
-  create(createTribeDto: CreateTribeDto) {
-    return 'This action adds a new tribe';
-  }
-
-  findAll() {
-    return `This action returns all tribes`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} tribe`;
-  }
 
   async findRepositories(id: number) {
     const stateType = 'E';
@@ -66,13 +52,5 @@ export class TribesService {
     parseResult.coverage = `${parseResult.coverage}%`;
 
     return { "repositories": parseResult };
-  }
-
-  update(id: number, updateTribeDto: UpdateTribeDto) {
-    return `This action updates a #${id} tribe`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} tribe`;
   }
 }
