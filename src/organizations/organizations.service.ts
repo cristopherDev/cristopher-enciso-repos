@@ -50,10 +50,7 @@ export class OrganizationsService {
   }
 
   async remove(id: number) {
-    const result = await this.prisma.organization.delete({ where: { id } });
-    const deleteResult = JSON.stringify(result, (_key, value) =>
-      typeof value === 'bigint' ? value.toString() : value,
-    );
-    return deleteResult;
+    await this.prisma.organization.delete({ where: { id } });
+    return this.findAll();
   }
 }
