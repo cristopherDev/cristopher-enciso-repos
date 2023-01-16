@@ -19,7 +19,7 @@ model organization {
 
 model tribe {
   id BigInt @id @default(sequence())
-  organization organization @relation(fields: [id_organization], references: [id])
+  organization organization @relation(fields: [id_organization], references: [id], onDelete: Cascade, onUpdate: Cascade)
   id_organization BigInt
   name String @db.String(50)
   status Int
@@ -28,7 +28,7 @@ model tribe {
 
 model repository {
   id BigInt @id @default(sequence())
-  tribe tribe @relation(fields: [id_tribe], references: [id])
+  tribe tribe @relation(fields: [id_tribe], references: [id], onDelete: Cascade, onUpdate: Cascade)
   id_tribe BigInt
   name String @db.String(50)
   state String @db.String(1)
@@ -38,7 +38,7 @@ model repository {
 }
 
 model metrics {
-  repository repository @relation(fields: [id_repository], references: [id])
+  repository repository @relation(fields: [id_repository], references: [id], onDelete: Cascade, onUpdate: Cascade)
   id_repository BigInt @id @default(sequence())
   coverage Float 
   bugs Int
