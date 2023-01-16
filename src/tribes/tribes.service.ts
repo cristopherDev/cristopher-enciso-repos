@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTribeDto } from './dto/create-tribe.dto';
 import { UpdateTribeDto } from './dto/update-tribe.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class TribesService {
