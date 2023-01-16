@@ -17,4 +17,11 @@ describe('RepositoriesController', () => {
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
+
+  describe('findAll()', () => {
+    it('should return list of repositories', async () => {
+      const list = await controller.findAll()
+      expect(typeof list).toBe('object');
+    });
+  });
 });

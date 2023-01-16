@@ -15,4 +15,11 @@ describe('RepositoriesService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  describe('findAll()', () => {
+    it('should return list of repositories', async () => {
+      const list = await service.findAll();
+      expect(typeof list).toBe('object');
+    });
+  });
 });
