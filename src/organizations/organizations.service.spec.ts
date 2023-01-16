@@ -1,18 +1,23 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { PrismaService } from '../prisma/prisma.service';
 import { OrganizationsService } from './organizations.service';
 
 describe('OrganizationsService', () => {
-  let service: OrganizationsService;
+  let service: OrganizationsService
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [OrganizationsService],
+      providers: [OrganizationsService, PrismaService],
     }).compile();
 
-    service = module.get<OrganizationsService>(OrganizationsService);
+    service = module.get<OrganizationsService>(OrganizationsService)
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
+  describe('findAll()', () => {
+    it('should return list of organizations', async () => {
+      const list = await service.findAll()
+      console.log(list)
+      expect(typeof list).toBe('object')
+    })
+  })
 });
